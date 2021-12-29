@@ -12,23 +12,23 @@ Note: Make sure use to escape the `$` variable placeholder
 when the command script is enclosed in double quote characters.
 
 
-== Example 
+## Code 
 
-process foo {
-  echo true
-  script:
-  """
-  echo foo task path: \$PWD
-  """ 
-}
+    process foo {
+      echo true
+      script:
+      """
+      echo foo task path: \$PWD
+      """ 
+    }
 
-process bar {
-  echo true
-  script:
-  '''
-  echo bar task path: $PWD
-  ''' 
-}
+    process bar {
+      echo true
+      script:
+      '''
+      echo bar task path: $PWD
+      ''' 
+    }
 
 
 ## Run it 
