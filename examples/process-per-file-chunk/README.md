@@ -15,21 +15,21 @@ Splitter for specific file formats are available, eg https://www.nextflow.io/doc
 
 ## Code 
 
-Channel
-    .fromPath('poem.txt')
-    .splitText(by: 5)
-    .set{ chunks_ch }
+    Channel
+        .fromPath('poem.txt')
+        .splitText(by: 5)
+        .set{ chunks_ch }
 
-process foo {
-  echo true
-  input: 
-  file x from chunks_ch
+    process foo {
+      echo true
+      input: 
+      file x from chunks_ch
 
-  script:
-  """
-  rev $x | rev
-  """
-} 
+      script:
+      """
+      rev $x | rev
+      """
+    } 
 
 
 ## Run it 
