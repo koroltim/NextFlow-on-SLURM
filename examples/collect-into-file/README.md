@@ -11,22 +11,22 @@ the output files into a single file.
 
 ## Code
 
-Channel.fromPath('reads/*_1.fq.gz').set { samples_ch }
+    Channel.fromPath('reads/*_1.fq.gz').set { samples_ch }
 
-process foo {
-  input:
-  file x from samples_ch
-  output:
-  file 'file.fq' into unzipped_ch
-  script:
-  """
-  < $x zcat > file.fq
-  """
-}
+    process foo {
+      input:
+      file x from samples_ch
+      output:
+      file 'file.fq' into unzipped_ch
+      script:
+      """
+      < $x zcat > file.fq
+      """
+    }
 
-unzipped_ch
-      .collectFile()
-      .println{ it.text }
+    unzipped_ch
+          .collectFile()
+          .println{ it.text }
 
 
 ## Run it
@@ -34,4 +34,4 @@ unzipped_ch
 Use the the following command to execute the example:
 
 
-        nextflow run patterns/collect-into-file.nf
+    nextflow run patterns/collect-into-file.nf
