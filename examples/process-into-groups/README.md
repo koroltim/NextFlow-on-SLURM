@@ -11,28 +11,28 @@ a key extracted from the file name. Then chain the resulting channel with the ht
 
 ## Code
 
-Channel
-    .fromPath('reads/*')  
-    .map { file -> 
-        def key = file.name.toString().tokenize('_').get(0)
-        return tuple(key, file)
-     }
-    .groupTuple()
-    .set{ groups_ch }
+        Channel
+            .fromPath('reads/*')  
+            .map { file -> 
+                def key = file.name.toString().tokenize('_').get(0)
+                return tuple(key, file)
+             }
+            .groupTuple()
+            .set{ groups_ch }
 
 
-process foo {
-  input:
-  set key, file(samples) from groups_ch
+        process foo {
+          input:
+          set key, file(samples) from groups_ch
 
-  script:
-  """
-  echo your_command --batch $key --input $samples 
-  """
-} 
-
-
-== Run it 
+          script:
+          """
+          echo your_command --batch $key --input $samples 
+          """
+        } 
 
 
-        nextflow run patterns/process-into-groups.nf
+## Run it 
+
+
+    nextflow run patterns/process-into-groups.nf
