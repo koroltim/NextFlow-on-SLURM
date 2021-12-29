@@ -17,30 +17,30 @@ its execution when the other process completes.
 
 ## Code 
 
-Channel
-    .fromPath('.data/reads/*.fq.gz')
-    .set{ reads_ch }
+        Channel
+            .fromPath('.data/reads/*.fq.gz')
+            .set{ reads_ch }
 
-process foo {
-    output: 
-    val true into done_ch
+        process foo {
+            output: 
+            val true into done_ch
 
-    script:
-    """
-    your_command_here
-    """
-}
+            script:
+            """
+            your_command_here
+            """
+        }
 
-process bar {
-    input: 
-    val flag from done_ch
-    file fq from reads_ch
+        process bar {
+            input: 
+            val flag from done_ch
+            file fq from reads_ch
 
-    script:
-    """
-    other_commad_here --reads $fq
-    """
-}
+            script:
+            """
+            other_commad_here --reads $fq
+            """
+        }
 
 
 ## Run it
@@ -48,4 +48,4 @@ process bar {
 Run the example using this command:
 
 
-        nextflow run patterns/mock-dependency.nf
+    nextflow run patterns/mock-dependency.nf
