@@ -15,36 +15,36 @@ of the first process output (when executed) and the input channel.
 
 ## Code 
 
-params.skip = false
-params.input = "$baseDir/sample.fq.gz" 
+    params.skip = false
+    params.input = "$baseDir/sample.fq.gz" 
 
-Channel.fromPath(params.input).set{ input_ch }
+    Channel.fromPath(params.input).set{ input_ch }
 
-(foo_ch, bar_ch) = ( params.skip 
-                 ? [Channel.empty(), input_ch] 
-                 : [input_ch, Channel.empty()] ) 
+    (foo_ch, bar_ch) = ( params.skip 
+                     ? [Channel.empty(), input_ch] 
+                     : [input_ch, Channel.empty()] ) 
 
-process foo {
-  input:
-  file x from foo_ch
+    process foo {
+      input:
+      file x from foo_ch
 
-  output:
-  file('*.fastq') into optional_ch
+      output:
+      file('*.fastq') into optional_ch
 
-  script:
-  """
-  < $x zcat > ${x.simpleName}.fastq
-  """
-}
+      script:
+      """
+      < $x zcat > ${x.simpleName}.fastq
+      """
+    }
 
-process bar {
-  echo true
-  input: 
-  file x from bar_ch.mix(optional_ch)
-  """
-  echo your_command --input $x
-  """
-}
+    process bar {
+      echo true
+      input: 
+      file x from bar_ch.mix(optional_ch)
+      """
+      echo your_command --input $x
+      """
+    }
 
 
 ## Run it
