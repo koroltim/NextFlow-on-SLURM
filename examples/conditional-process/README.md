@@ -16,42 +16,42 @@ for the third process.
 
 ## Code 
 
-params.flag = false 
+    params.flag = false 
 
-process foo {
-  output: 
-  file 'x.txt' into foo_ch
-  when:
-  !params.flag
+    process foo {
+      output: 
+      file 'x.txt' into foo_ch
+      when:
+      !params.flag
 
-  script:
-  '''
-  echo foo > x.txt
-  '''
-}
+      script:
+      '''
+      echo foo > x.txt
+      '''
+    }
 
-process bar {
-  output: 
-  file 'x.txt' into bar_ch
-  when:
-  params.flag
+    process bar {
+      output: 
+      file 'x.txt' into bar_ch
+      when:
+      params.flag
 
-  script:
-  '''
-  echo bar > x.txt
-  '''
-}
+      script:
+      '''
+      echo bar > x.txt
+      '''
+    }
 
-process omega {
-  echo true
-  input:
-  file x from foo_ch.mix(bar_ch)
-  
-  script:
-  """
-  cat $x 
-  """
-}
+    process omega {
+      echo true
+      input:
+      file x from foo_ch.mix(bar_ch)
+
+      script:
+      """
+      cat $x 
+      """
+    }
 
 
 ## Run it
@@ -81,53 +81,53 @@ for the third process.
 
 ## Code 
 
-params.flag = false
+    params.flag = false
 
-(foo_inch, bar_inch) = ( params.flag
-                     ? [ Channel.empty(), Channel.from(1,2,3) ]
-                     : [ Channel.from(4,5,6), Channel.empty() ] )   
+    (foo_inch, bar_inch) = ( params.flag
+                         ? [ Channel.empty(), Channel.from(1,2,3) ]
+                         : [ Channel.from(4,5,6), Channel.empty() ] )   
 
-process foo {
+    process foo {
 
-  input:
-  val(f) from foo_inch
+      input:
+      val(f) from foo_inch
 
-  output:
-  file 'x.txt' into foo_ch
+      output:
+      file 'x.txt' into foo_ch
 
-  script:
-  """
-  echo $f > x.txt
-  """
-}
+      script:
+      """
+      echo $f > x.txt
+      """
+    }
 
-process bar {
-  input:
-  val(b) from bar_inch
+    process bar {
+      input:
+      val(b) from bar_inch
 
-  output:
-  file 'x.txt' into bar_ch
+      output:
+      file 'x.txt' into bar_ch
 
-  script:
-  """
-  echo $b > x.txt
-  """
-}
+      script:
+      """
+      echo $b > x.txt
+      """
+    }
 
-process omega {
-  echo true
-  input:
-  file x from foo_ch.mix(bar_ch)
+    process omega {
+      echo true
+      input:
+      file x from foo_ch.mix(bar_ch)
 
-  script:
-  """
-  cat $x
-  """
-}
+      script:
+      """
+      cat $x
+      """
+    }
 
 
 ## Run it 
 
 
-        nextflow run patterns/conditional-process2.nf
+    nextflow run patterns/conditional-process2.nf
 
