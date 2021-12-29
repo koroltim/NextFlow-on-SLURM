@@ -11,21 +11,21 @@ Use the process https://www.nextflow.io/docs/latest/process.html#errorstrategy[d
 
 ## Code 
 
-process foo {
-  errorStrategy 'ignore'
-  script:
-  '''
-    echo This is going to fail!
-    exit 1
-  '''
-}  
+    process foo {
+      errorStrategy 'ignore'
+      script:
+      '''
+        echo This is going to fail!
+        exit 1
+      '''
+    }  
 
-process bar {
-  script:
-  '''
-  echo OK
-  '''
-}
+    process bar {
+      script:
+      '''
+      echo OK
+      '''
+    }
 
 
 ## Run it 
