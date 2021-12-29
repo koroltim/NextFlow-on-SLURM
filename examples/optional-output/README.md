@@ -10,15 +10,15 @@ Declare such output as an `optional` file.
 
 ## Code 
 
-process foo {
-  output: 
-  file 'foo.txt' optional true into foo_ch 
+    process foo {
+      output: 
+      file 'foo.txt' optional true into foo_ch 
 
-  script:
-  '''
-  your_command 
-  '''
-}
+      script:
+      '''
+      your_command 
+      '''
+    }
 
 
 ## Run it
