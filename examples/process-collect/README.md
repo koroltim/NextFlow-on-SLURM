@@ -12,27 +12,27 @@ Then use the resulting channel as input input for the process.
 
 ## Code 
 
-Channel.fromPath('reads/*_1.fq.gz').set { samples_ch }
+    Channel.fromPath('reads/*_1.fq.gz').set { samples_ch }
 
-process foo {
-  input:
-  file x from samples_ch
-  output:
-  file 'file.fq' into unzipped_ch
-  script:
-  """
-  < $x zcat > file.fq
-  """
-}
+    process foo {
+      input:
+      file x from samples_ch
+      output:
+      file 'file.fq' into unzipped_ch
+      script:
+      """
+      < $x zcat > file.fq
+      """
+    }
 
-process bar {
-  echo true   
-  input:
-  file '*.fq' from unzipped_ch.collect()
-  """
-  cat *.fq
-  """
-}
+    process bar {
+      echo true   
+      input:
+      file '*.fq' from unzipped_ch.collect()
+      """
+      cat *.fq
+      """
+    }
 
 
 ## Run it
@@ -40,5 +40,5 @@ process bar {
 Use the the following command to execute the example:
 
 
-        nextflow run patterns/process-collect.nf
+    nextflow run patterns/process-collect.nf
 
