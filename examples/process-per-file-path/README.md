@@ -11,17 +11,17 @@ Use the https://www.nextflow.io/docs/latest/channel.html#frompath[Channel.fromPa
 
 ## Code 
 
-Channel.fromPath('reads/*_1.fq.gz').set{ samples_ch }
+    Channel.fromPath('reads/*_1.fq.gz').set{ samples_ch }
 
-process foo {
-  input:
-  file x from samples_ch
-  
-  script:
-  """
-  your_command --input $x
-  """
-}
+    process foo {
+      input:
+      file x from samples_ch
+
+      script:
+      """
+      your_command --input $x
+      """
+    }
 
 
 
