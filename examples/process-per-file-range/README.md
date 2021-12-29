@@ -13,26 +13,26 @@ to associate the each index the corresponding input files. Finally use the resul
 
 ## Code 
 
-Channel
-  .from(1..23)
-  .map { chr -> tuple("sample$chr", file("/some/path/foo.${chr}.indels.vcf"), file("/other/path/foo.snvs.${chr}.vcf")) }
-  .set { pairs_ch }
-  
-  
-process foo {
-  tag "$sampleId"
-  
-  input: 
-  set sampleId, file(indels), file(snps) from pairs_ch
-  
-  """
-  echo foo_command --this $indels --that $snps
-  """
-} 
+    Channel
+      .from(1..23)
+      .map { chr -> tuple("sample$chr", file("/some/path/foo.${chr}.indels.vcf"), file("/other/path/foo.snvs.${chr}.vcf")) }
+      .set { pairs_ch }
+
+
+    process foo {
+      tag "$sampleId"
+
+      input: 
+      set sampleId, file(indels), file(snps) from pairs_ch
+
+      """
+      echo foo_command --this $indels --that $snps
+      """
+    } 
 
 
 ## Run it 
 
 
-        nextflow run patterns/process-per-file-range.nf
+    nextflow run patterns/process-per-file-range.nf
 
