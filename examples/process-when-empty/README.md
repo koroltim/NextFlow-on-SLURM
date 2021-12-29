@@ -11,17 +11,17 @@ a _marker_ value to trigger the execution of the process.
 
 ## Example 
 
-process foo {
-  input:
-  val x from ch.ifEmpty { 'EMPTY' } 
-  when:
-  x == 'EMPTY'
+    process foo {
+      input:
+      val x from ch.ifEmpty { 'EMPTY' } 
+      when:
+      x == 'EMPTY'
 
-  script:
-  '''
-  your_command
-  ''' 
-}
+      script:
+      '''
+      your_command
+      ''' 
+    }
 
 
 ## Run it 
