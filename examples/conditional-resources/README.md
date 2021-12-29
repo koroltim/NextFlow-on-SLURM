@@ -17,26 +17,26 @@ definition.
 
 ## Code 
 
-Channel
-    .fromPath('reads/*_1.fq.gz')
-    .set { reads_ch }
+    Channel
+        .fromPath('reads/*_1.fq.gz')
+        .set { reads_ch }
 
-process foo {
-    memory { reads.size() < 70.KB ? 1.GB : 5.GB }
+    process foo {
+        memory { reads.size() < 70.KB ? 1.GB : 5.GB }
 
-    input:
-    file reads from reads_ch 
+        input:
+        file reads from reads_ch 
 
-    """
-    your_command_here --in $reads
-    """
-}
+        """
+        your_command_here --in $reads
+        """
+    }
 
 
 ## Run it 
 
 
-nextflow run patterns/conditional-resources.nf
+    nextflow run patterns/conditional-resources.nf
 
 
 Note: requires version 0.32.0 or later.
