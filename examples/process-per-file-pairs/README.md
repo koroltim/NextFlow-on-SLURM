@@ -13,25 +13,25 @@ The matching files are emitted as tuples in which the first element is the group
 
 ## Code
 
-Channel
-    .fromFilePairs('reads/*_{1,2}.fq.gz')
-    .set { samples_ch }
+        Channel
+            .fromFilePairs('reads/*_{1,2}.fq.gz')
+            .set { samples_ch }
 
-process foo {
-  input:
-  set sampleId, file(reads) from samples_ch
+        process foo {
+          input:
+          set sampleId, file(reads) from samples_ch
 
-  script:
-  """
-  your_command --sample $sampleId --reads $reads
-  """
-}
+          script:
+          """
+          your_command --sample $sampleId --reads $reads
+          """
+        }
 
 
 ## Run it 
 
 
-        nextflow run patterns/process-per-file-pairs.nf
+    nextflow run patterns/process-per-file-pairs.nf
 
 
 
@@ -39,23 +39,23 @@ process foo {
 
 When needed it is possible to define a custom grouping strategy. A common use case is for alignment BAM files (`sample1.bam`) that come along with their index file. The difficulty is that the index is sometimes called `sample1.bai` and sometimes `sample1.bam.bai` depending on the software used. The following example can accommodate both cases. 
 
-Channel
-    .fromFilePairs('alignment/*.{bam,bai}') { file -> file.name.replaceAll(/.bam|.bai$/,'') }
-    .set { samples_ch }
+        Channel
+            .fromFilePairs('alignment/*.{bam,bai}') { file -> file.name.replaceAll(/.bam|.bai$/,'') }
+            .set { samples_ch }
 
-process foo {
-  input:
-  set sampleId, file(bam) from samples_ch
+        process foo {
+          input:
+          set sampleId, file(bam) from samples_ch
 
-  script:
-  """
-  your_command --sample $sampleId --bam ${sampleId}.bam
-  """
-}
+          script:
+          """
+          your_command --sample $sampleId --bam ${sampleId}.bam
+          """
+        }
 
 
 ## Run it 
 
 
-        nextflow run patterns/process-per-file-pairs-custom.nf
+    nextflow run patterns/process-per-file-pairs-custom.nf
 
